@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn import preprocessing
 from scipy.io.arff import loadarff
 from sklearn.naive_bayes import GaussianNB
-import sklearn_NaiveBayees_UNSW_NB15
+import sklearn_NaiveBayees, tensorFlow_MLP
 
 
 def load_nb15_csv():
@@ -19,11 +19,12 @@ def load_nslkdd_arff():
 
 
 datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv), 2: ("NSL-KDD (arff)", load_nslkdd_arff)}
-algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees_UNSW_NB15.run_naiveBayes)}
+algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees.run_naiveBayes), 2: ("MLP", tensorFlow_MLP.run_MLP)}
 
 
 def main():
     dataset_selection = get_dataset_selection()
+    print("You selected {}, beginning to preprocess data...\n\n".format(datasets[dataset_selection][0]))
     train, test = datasets[dataset_selection][1]()
     X_train, X_test, y_train, y_test = preprocess_data(train, test)
 
@@ -65,7 +66,20 @@ def get_dataset_selection():
 
 
 def get_algorithm_selection():
-    return 1
+    while True:
+        print("Which algorithm would you like to use:")
+        for i in range(len(algorithms)):
+            print("{}. {}".format(i + 1, algorithms[i + 1][0]))
+
+        try:
+            user_input = int(input("Your selection: "))
+            if user_input > len(algorithms) or user_input < 1:
+                raise ValueError
+        except ValueError:
+            print("\nPlease enter a valid number\n\n")
+            continue
+        else:
+            return user_input
 
 
 if __name__ == "__main__":
