@@ -9,6 +9,7 @@ import tensorFlow_MLP
 import sklearn_SVC
 import sklearn_RandomForestsClassifier
 import sklearn_j48
+import sklearn_MLP
 
 
 def load_nb15_csv():
@@ -28,9 +29,10 @@ datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv),
 
 algorithms = {1: ("Naive Bayes (sklearn)", sklearn_NaiveBayees.run_naive_bayes),
               2: ("MLP (tensorflow)", tensorFlow_MLP.run_mlp),
-              3: ("SVC (sklearn)", sklearn_SVC.run_svc),
-              4: ("Random Forests Classifier (sklearn)", sklearn_RandomForestsClassifier.run_random_forests_classifier),
-              5: ("j48 (sklearn)", sklearn_j48.run_j48)}
+              3: ("MLP (sklearn)", sklearn_MLP.run_mlp),
+              4: ("SVC (sklearn)", sklearn_SVC.run_svc),
+              5: ("Random Forests Classifier (sklearn)", sklearn_RandomForestsClassifier.run_random_forests_classifier),
+              6: ("j48 (sklearn)", sklearn_j48.run_j48)}
 
 
 def main():
