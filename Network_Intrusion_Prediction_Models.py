@@ -20,18 +20,22 @@ def load_nslkdd_arff():
     return np.asarray(kdd_train.tolist()), np.asarray(kdd_test.tolist())
 
 
-datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv), 2: ("NSL-KDD (arff)", load_nslkdd_arff)}
-algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees.run_naive_bayes), 2: ("MLP", tensorFlow_MLP.run_mlp)}
+datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv),
+            2: ("NSL-KDD (arff)", load_nslkdd_arff)}
+
+algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees.run_naive_bayes),
+              2: ("MLP", tensorFlow_MLP.run_mlp)}
 
 
 def main():
+    # Receive user input for which dataset to utilize and then preprocess to prepare for algorithms
     dataset_selection = get_dataset_selection()
     print("You selected {}, beginning to preprocess data...\n\n".format(datasets[dataset_selection][0]))
     train, test = datasets[dataset_selection][1]()
     X_train, X_test, y_train, y_test = preprocess_data(train, test)
 
+    # Determine which algorithm to use then execute
     algorithm_selection = get_algorithm_selection()
-
     algorithms[algorithm_selection][1](X_train, X_test, y_train, y_test)
 
 
@@ -50,10 +54,6 @@ def preprocess_data(training_nparray, testing_nparray):
     return X_train, X_test, y_train, y_test
 
 
-def get_dataset_selection():
-    return display_list(datasets)
-
-
 def display_list(data):
     while True:
         print("Which dataset would you like to use:")
@@ -69,6 +69,10 @@ def display_list(data):
             continue
         else:
             return user_input
+
+
+def get_dataset_selection():
+    return display_list(datasets)
 
 
 def get_algorithm_selection():
