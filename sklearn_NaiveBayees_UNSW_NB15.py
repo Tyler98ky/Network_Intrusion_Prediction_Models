@@ -3,19 +3,7 @@ from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import pandas as pd
 
-def run_naiveBayes(training_nparray, testing_nparray):
-
-    # Preprocess
-    enc = preprocessing.OrdinalEncoder()
-
-    encoded_dataset = enc.fit_transform(training_nparray)  # All categorical features are now numerical
-    X_train = encoded_dataset[:, :-1]  # All rows, omit last column
-    y_train = np.ravel(encoded_dataset[:, -1:])  # All rows, only the last column
-
-    # Repeat preprocessing for test data
-    encoded_dataset = enc.fit_transform(testing_nparray)
-    X_test = encoded_dataset[:, :-1]
-    y_test = np.ravel(encoded_dataset[:, -1:])
+def run_naiveBayes(X_train, X_test, y_train, y_test):
 
     # Fit to model and predict
     gnb = GaussianNB()

@@ -19,16 +19,33 @@ def load_nslkdd_arff():
 
 
 datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv), 2: ("NSL-KDD (arff)", load_nslkdd_arff)}
-algorithms = {1: ("UNSW-NB15 (csv)", load_nb15_csv), 2: ("NSL-KDD (arff)", load_nslkdd_arff)}
+algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees_UNSW_NB15.run_naiveBayes)}
+
 
 def main():
     dataset_selection = get_dataset_selection()
+    train, test = datasets[dataset_selection][1]()
+    X_train, X_test, y_train, y_test = preprocess_data(train, test)
 
     algorithm_selection = get_algorithm_selection()
 
-    train, test = datasets[dataset_selection][1]()
+    algorithms[algorithm_selection][1](X_train, X_test, y_train, y_test)
 
-    sklearn_NaiveBayees_UNSW_NB15.run_naiveBayes(train, test)
+
+def preprocess_data(training_nparray, testing_nparray):
+    # Preprocess
+    enc = preprocessing.OrdinalEncoder()
+
+    encoded_dataset = enc.fit_transform(training_nparray)  # All categorical features are now numerical
+    X_train = encoded_dataset[:, :-1]  # All rows, omit last column
+    y_train = np.ravel(encoded_dataset[:, -1:])  # All rows, only the last column
+
+    # Repeat preprocessing for test data
+    encoded_dataset = enc.fit_transform(testing_nparray)
+    X_test = encoded_dataset[:, :-1]
+    y_test = np.ravel(encoded_dataset[:, -1:])
+    return X_train, X_test, y_train, y_test
+
 
 def get_dataset_selection():
     while True:
@@ -48,7 +65,7 @@ def get_dataset_selection():
 
 
 def get_algorithm_selection():
-    print()
+    return 1
 
 
 if __name__ == "__main__":
