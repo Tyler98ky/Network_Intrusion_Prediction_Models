@@ -1,9 +1,7 @@
-from sklearn import preprocessing
 from sklearn.naive_bayes import GaussianNB
-import numpy as np
-import pandas as pd
 
-def run_naiveBayes(X_train, X_test, y_train, y_test):
+
+def run_naive_bayes(X_train, X_test, y_train, y_test):
 
     # Fit to model and predict
     gnb = GaussianNB()

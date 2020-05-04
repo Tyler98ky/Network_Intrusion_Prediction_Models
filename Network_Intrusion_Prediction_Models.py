@@ -2,8 +2,10 @@ import numpy as np
 import pandas as pd
 from sklearn import preprocessing
 from scipy.io.arff import loadarff
-from sklearn.naive_bayes import GaussianNB
-import sklearn_NaiveBayees, tensorFlow_MLP
+
+# Algorithms we implemented
+import sklearn_NaiveBayees
+import tensorFlow_MLP
 
 
 def load_nb15_csv():
@@ -19,7 +21,7 @@ def load_nslkdd_arff():
 
 
 datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv), 2: ("NSL-KDD (arff)", load_nslkdd_arff)}
-algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees.run_naiveBayes), 2: ("MLP", tensorFlow_MLP.run_MLP)}
+algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees.run_naive_bayes), 2: ("MLP", tensorFlow_MLP.run_mlp)}
 
 
 def main():
@@ -49,14 +51,18 @@ def preprocess_data(training_nparray, testing_nparray):
 
 
 def get_dataset_selection():
+    return display_list(datasets)
+
+
+def display_list(data):
     while True:
         print("Which dataset would you like to use:")
-        for i in range(len(datasets)):
-            print("{}. {}".format(i+1, datasets[i+1][0]))
+        for i in range(len(data)):
+            print("{}. {}".format(i + 1, data[i + 1][0]))
 
         try:
             user_input = int(input("Your selection: "))
-            if user_input > len(datasets) or user_input < 1:
+            if user_input > len(data) or user_input < 1:
                 raise ValueError
         except ValueError:
             print("\nPlease enter a valid number\n\n")
@@ -66,20 +72,7 @@ def get_dataset_selection():
 
 
 def get_algorithm_selection():
-    while True:
-        print("Which algorithm would you like to use:")
-        for i in range(len(algorithms)):
-            print("{}. {}".format(i + 1, algorithms[i + 1][0]))
-
-        try:
-            user_input = int(input("Your selection: "))
-            if user_input > len(algorithms) or user_input < 1:
-                raise ValueError
-        except ValueError:
-            print("\nPlease enter a valid number\n\n")
-            continue
-        else:
-            return user_input
+    return display_list(algorithms)
 
 
 if __name__ == "__main__":

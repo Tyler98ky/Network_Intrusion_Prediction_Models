@@ -1,11 +1,8 @@
-import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
-from scipy.io.arff import loadarff
-from sklearn import preprocessing
 
 
-def run_MLP(X_train, X_test, y_train, y_test):
+def run_mlp(X_train, X_test, y_train, y_test):
     input_dim = X_train.shape[1]
     model = Sequential()
     model.add(Dense(64, input_dim=input_dim, activation='relu'))
