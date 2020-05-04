@@ -6,6 +6,7 @@ from scipy.io.arff import loadarff
 # Algorithms we implemented
 import sklearn_NaiveBayees
 import tensorFlow_MLP
+import sklearn_SVC
 
 
 def load_nb15_csv():
@@ -24,7 +25,8 @@ datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv),
             2: ("NSL-KDD (arff)", load_nslkdd_arff)}
 
 algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees.run_naive_bayes),
-              2: ("MLP", tensorFlow_MLP.run_mlp)}
+              2: ("MLP", tensorFlow_MLP.run_mlp),
+              3: ("SVC", sklearn_SVC.run_svc)}
 
 
 def main():
