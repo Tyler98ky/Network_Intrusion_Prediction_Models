@@ -6,7 +6,7 @@ from sklearn.naive_bayes import GaussianNB
 import sklearn_NaiveBayees_UNSW_NB15
 
 # 0 will be UNSW
-datasets = ["unsw", "nsl-kdd"]
+datasets = ["UNSW-NB15 (csv)", "NSL-KDD (arff)"]
 algorithms = []
 
 def main():
@@ -19,9 +19,8 @@ def main():
 def get_dataset_selection():
     while True:
         print("Which dataset would you like to use:")
-        # TODO surround with for loop to print each thing listed in dataset
-        print("1. UNSW-NB15 (csv)")
-        print("2. NSL-KDD (arff)")
+        for i in range(len(datasets)):
+            print("{}. {}".format(i+1, datasets[i]))
 
         try:
             user_input = int(input("Your selection: "))
