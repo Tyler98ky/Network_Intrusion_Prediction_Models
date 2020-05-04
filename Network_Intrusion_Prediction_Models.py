@@ -26,11 +26,11 @@ def load_nslkdd_arff():
 datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv),
             2: ("NSL-KDD (arff)", load_nslkdd_arff)}
 
-algorithms = {1: ("Naive Bayes", sklearn_NaiveBayees.run_naive_bayes),
-              2: ("MLP", tensorFlow_MLP.run_mlp),
-              3: ("SVC", sklearn_SVC.run_svc),
-              4: ("Random Forests Classifier", sklearn_RandomForestsClassifier.run_random_forests_classifier),
-              5: ("j48", sklearn_j48.run_j48)}
+algorithms = {1: ("Naive Bayes (sklearn)", sklearn_NaiveBayees.run_naive_bayes),
+              2: ("MLP (tensorflow)", tensorFlow_MLP.run_mlp),
+              3: ("SVC (sklearn)", sklearn_SVC.run_svc),
+              4: ("Random Forests Classifier (sklearn)", sklearn_RandomForestsClassifier.run_random_forests_classifier),
+              5: ("j48 (sklearn)", sklearn_j48.run_j48)}
 
 
 def main():
