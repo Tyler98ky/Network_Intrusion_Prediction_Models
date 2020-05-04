@@ -16,16 +16,20 @@ def run_mlp(X_train, X_test, y_train, y_test):
                   metrics=['accuracy'])
 
     model.fit(X_train, y_train,
-              epochs=500,
+              epochs=1,
               batch_size=128)
     score = model.evaluate(X_test, y_test, batch_size=128)
+    prediction = model.predict(X_test).round()
 
-    total_datapoints = X_test.shape[0]
-    percent_correct = score[1] * 100
-    correct_datapoints = int(round(total_datapoints * percent_correct) / 100)
-    mislabeled_datapoints = total_datapoints - correct_datapoints
+    return prediction
 
-
-    print("MultiLevelPerceptron Classifier results for NSL-KDD using TensorFlow and Keras:\n")
-    print("Total datapoints: %d\nCorrect datapoints: %d\nMislabeled datapoints: %d\nPercent correct: %.2f%%"
-          % (total_datapoints, correct_datapoints, mislabeled_datapoints, percent_correct))
+    #
+    # total_datapoints = X_test.shape[0]
+    # percent_correct = score[1] * 100
+    # correct_datapoints = int(round(total_datapoints * percent_correct) / 100)
+    # mislabeled_datapoints = total_datapoints - correct_datapoints
+    #
+    #
+    # print("MultiLevelPerceptron Classifier results for NSL-KDD using TensorFlow and Keras:\n")
+    # print("Total datapoints: %d\nCorrect datapoints: %d\nMislabeled datapoints: %d\nPercent correct: %.2f%%"
+    #       % (total_datapoints, correct_datapoints, mislabeled_datapoints, percent_correct))

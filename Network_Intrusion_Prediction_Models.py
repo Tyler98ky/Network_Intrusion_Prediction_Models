@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn import preprocessing
 from scipy.io.arff import loadarff
+import sklearn as sk
 
 # Algorithms we implemented
 import sklearn_NaiveBayees
@@ -44,7 +45,23 @@ def main():
 
     # Determine which algorithm to use then execute
     algorithm_selection = get_algorithm_selection()
-    algorithms[algorithm_selection][1](X_train, X_test, y_train, y_test)
+    predictions = algorithms[algorithm_selection][1](X_train, X_test, y_train, y_test)
+    output_results(predictions, y_test)
+
+
+def output_results(y_pred, y_test):
+    positive_label = "anomaly"
+    negative_label = "normal"
+    padding = " " * max(len(positive_label), len(negative_label))
+
+    confusion_matrix = sk.metrics.confusion_matrix(y_test, y_pred)
+
+    print("")
+    print("*Columns represent actual class rows represent what the model chose as classification*")
+    print("{}{} {}".format(padding, positive_label, negative_label))
+    print("{} {}".format(positive_label, confusion_matrix[0]))
+    print("{} {}".format(negative_label, confusion_matrix[1]))
+    print("Percent correct: {:.3%}".format(sk.metrics.accuracy_score(y_test, y_pred)))
 
 
 def preprocess_data(training_nparray, testing_nparray):
