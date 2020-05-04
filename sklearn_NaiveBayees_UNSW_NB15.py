@@ -3,9 +3,7 @@ from sklearn.naive_bayes import GaussianNB
 import numpy as np
 import pandas as pd
 
-def run_naiveBayes(training_dataset, testing_dataset):
-    training_nparray = training_dataset.to_numpy()  # This is necessary to correctly shape the array
-    testing_nparray = testing_dataset.to_numpy()
+def run_naiveBayes(training_nparray, testing_nparray):
 
     # Preprocess
     enc = preprocessing.OrdinalEncoder()
@@ -28,7 +26,7 @@ def run_naiveBayes(training_dataset, testing_dataset):
     correct_datapoints = total_datapoints - mislabeled_datapoints
     percent_correct = (correct_datapoints / total_datapoints) * 100
 
-    print("NaiveBayes results for UNSW_NB15:\n")
+    print("NaiveBayes results:\n")
     print("Total datapoints: %d\nCorrect datapoints: %d\nMislabeled datapoints: %d\nPercent correct: %.2f%%"
           % (total_datapoints, correct_datapoints, mislabeled_datapoints, percent_correct))
 
