@@ -4,6 +4,7 @@ from sklearn import preprocessing
 from scipy.io.arff import loadarff
 import sklearn as sk
 import logging
+import threading
 
 # Algorithms we implemented
 import sklearn_NaiveBayees
@@ -29,12 +30,16 @@ def load_nslkdd_arff():
 datasets = {1: ("UNSW-NB15 (csv)", load_nb15_csv),
             2: ("NSL-KDD (arff)", load_nslkdd_arff)}
 
-algorithms = {1: ("Naive Bayes (sklearn)", sklearn_NaiveBayees.run_naive_bayes),
-              2: ("MLP (tensorflow)", tensorFlow_MLP.run_mlp),
-              3: ("MLP (sklearn)", sklearn_MLP.run_mlp),
-              4: ("SVC (sklearn)", sklearn_SVC.run_svc),
-              5: ("Random Forests Classifier (sklearn)", sklearn_RandomForestsClassifier.run_random_forests_classifier),
-              6: ("j48 (sklearn)", sklearn_j48.run_j48)}
+algorithms = {1: ("Naive Bayes (sklearn)", {sklearn_NaiveBayees.run_naive_bayes}),
+              2: ("MLP (tensorflow)", {tensorFlow_MLP.run_mlp}),
+              3: ("MLP (sklearn)", {sklearn_MLP.run_mlp}),
+              4: ("SVC (sklearn)", {sklearn_SVC.run_svc}),
+              5: ("Random Forests Classifier (sklearn)", {sklearn_RandomForestsClassifier.run_random_forests_classifier}),
+              6: ("j48 (sklearn)", {sklearn_j48.run_j48}),
+              7: ("Run all aglorithms", {sklearn_NaiveBayees.run_naive_bayes,
+                                         sklearn_MLP.run_mlp, sklearn_SVC.run_svc,
+                                         sklearn_RandomForestsClassifier.run_random_forests_classifier,
+                                         sklearn_j48.run_j48})}
 
 
 def main():
@@ -46,8 +51,12 @@ def main():
 
     # Determine which algorithm to use then execute
     algorithm_selection = get_algorithm_selection()
-    predictions = algorithms[algorithm_selection][1](X_train, X_test, y_train, y_test)
-    output_results(predictions, y_test)
+
+    for algo in algorithms[algorithm_selection][1]:
+        x = threading.Thread(target=algo, args=(X_train, X_test, y_train, y_test))
+        x.start()
+        # predictions = algo(X_train, X_test, y_train, y_test)
+        # output_results(predictions, y_test)
 
 
 def log_results(y_pred, y_test):
