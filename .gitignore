@@ -17,6 +17,7 @@ __pycache__
 .idea/
 .vscode/
 .idea/**/contentModel.xml
+results.log
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
