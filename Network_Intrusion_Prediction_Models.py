@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn import preprocessing
 from scipy.io.arff import loadarff
 import sklearn as sk
+import logging
 
 # Algorithms we implemented
 import sklearn_NaiveBayees
@@ -47,6 +48,22 @@ def main():
     algorithm_selection = get_algorithm_selection()
     predictions = algorithms[algorithm_selection][1](X_train, X_test, y_train, y_test)
     output_results(predictions, y_test)
+
+
+def log_results(y_pred, y_test):
+    # logging.basicConfig(filename='app.log', filemode='w', format='%(process)d-%(levelname)s- %(message)s')
+    logging.basicConfig(filename='app-test.log', filemode='a')
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+
+    confusion_matrix = sk.metrics.confusion_matrix(y_test, y_pred)
+    string_to_log = ""
+    string_to_log += "Correctly labeled anomaly: {}, ".format(confusion_matrix[0][0])
+    string_to_log += "Incorrectly labeled anomaly: {}, ".format(confusion_matrix[0][1])
+    string_to_log += "Correctly labeled normal: {}, ".format(confusion_matrix[1][1])
+    string_to_log += "Incorrectly labeled normal: {}\n".format(confusion_matrix[1][0])
+
+    logger.info(string_to_log)
 
 
 def output_results(y_pred, y_test):
