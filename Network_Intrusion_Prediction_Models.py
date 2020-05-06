@@ -57,11 +57,17 @@ def log_results(y_pred, y_test):
     logger.setLevel(logging.INFO)
 
     confusion_matrix = sk.metrics.confusion_matrix(y_test, y_pred)
+    correct_anomaly = confusion_matrix[0][0]
+    incorrect_anomaly = confusion_matrix[0][1]
+    correct_normal = confusion_matrix[1][1]
+    incorrect_normal = confusion_matrix[1][0]
+
     string_to_log = ""
-    string_to_log += "Correctly labeled anomaly: {}, ".format(confusion_matrix[0][0])
-    string_to_log += "Incorrectly labeled anomaly: {}, ".format(confusion_matrix[0][1])
-    string_to_log += "Correctly labeled normal: {}, ".format(confusion_matrix[1][1])
-    string_to_log += "Incorrectly labeled normal: {}\n".format(confusion_matrix[1][0])
+    string_to_log += "Correctly labeled anomaly: {}, ".format(correct_anomaly)
+    string_to_log += "Incorrectly labeled anomaly: {}, ".format(incorrect_anomaly)
+    string_to_log += "Correctly labeled normal: {}, ".format(correct_normal)
+    string_to_log += "Incorrectly labeled normal: {}\n".format(incorrect_normal)
+    string_to_log += "Percent accuracy: {:.3%}\n".format(sk.metrics.accuracy_score(y_test, y_pred))
 
     logger.info(string_to_log)
 
