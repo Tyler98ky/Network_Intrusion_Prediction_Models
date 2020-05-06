@@ -52,7 +52,7 @@ def main():
 
 def log_results(y_pred, y_test):
     # logging.basicConfig(filename='app.log', filemode='w', format='%(process)d-%(levelname)s- %(message)s')
-    logging.basicConfig(filename='app-test.log', filemode='a')
+    logging.basicConfig(filename='results.log', filemode='a')
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
 
